@@ -6,28 +6,50 @@
         <title>TIN Project - Sudoku</title>
 
         <link rel="stylesheet" href="_css/main.css">
-        <script src="index.js"></script>
+        <script src="_assets/index.js"></script>
     </head>
 
+    <!------ HEADER ------------------------------------>
     <header>
         <h1>Sudoku</h1>
 
         <div id="game-parameters">
             <div id="difficulty">
                 <h3>Wybierz poziom trudności: </h3>
+                <label><input id="dif-easy" type="radio" name="difficulty" value="easy" checked>Łatwy</label>
+                <label><input id="dif-medium" type="radio" name="difficulty" value="medium">Średni</label>
+                <label><input id="dif-hard" type="radio" name="difficulty" value="hard">Trudny</label>
             </div>
 
             <div id="light-dark-mode">
                 <h3>Wybierz motyw: </h3>
+                <label><input id="mode-light" type="radio" name="light-dark-mode" value="light" checked>Jasny</label>
+                <label><input id="mode-dark" type="radio" name="light-dark-mode" value="dark">Ciemny</label>
             </div>
         </div>
+        <button id="create-game-btn">Generuj nową grę!</button>
     </header>
 
+    <!------ BODY ------------------------------------>
     <body>
-
+        <div id="game">
+            <div id="board"></div>
+            <div id="numbers">
+                <p id="one">1</p>
+                <p id="two">2</p>
+                <p id="three">3</p>
+                <p id="four">4</p>
+                <p id="five">5</p>
+                <p id="six">6</p>
+                <p id="seven">7</p>
+                <p id="eight">8</p>
+                <p id="nine">9</p>
+            </div>
+        </div>
     </body>
 
+    <!------ FOOTER ------------------------------------>
     <footer>
-        
+        <p>Site by s26407</p>
     </footer>
 </html>
