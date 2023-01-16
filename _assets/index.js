@@ -12,6 +12,9 @@ const hard = [
     "712583694639714258845269173521436987367928415498175326184697532253841769976352841"
 ];
 
+var selectedTile;
+var disableSelect;
+
 window.onload = function() {
     id("create-game-btn").addEventListener("click", StartGame);
 }
@@ -25,9 +28,19 @@ console.log("start!!!!!!!!!");
     else board = hard[0];
 
     generateBoard(board);
+
+    // Ustawianie motywu jasny / ciemny ////////////////
+    if (id("mode-light").checked) {
+        document.querySelector("body").classList.remove("dark");
+    } else {
+        document.querySelector("body").classList.add("dark");
+    }
 }
 
 function generateBoard(board) {
+    // Usuwanie poprzedniej planszy ////////////////
+    clearPrevious();
+    
     let idCount = 0;
 
     for (let i = 0; i < 81; i++) {
@@ -37,6 +50,21 @@ function generateBoard(board) {
             tile.textContent = board.charAt(i);
         } else {
             //tutaj dodać click event listener
+            tile.addEventListener("click", function() {
+                if(!disableSelect) {
+                    if (tile.classList.contains("selected")) {
+                        tile.classList.remove("selected");
+                        selectedTile = null;
+                    } else {
+                        for (let i = 0; i < 81; i++) {
+                            document.querySelectorAll(".tile")[i].classList.remove("selected");
+                        }
+                        tile.classList.add("selected");
+                        selectedTile = tile;
+                        updateMove();
+                    }
+                }
+            });
         }
         tile.id = idCount;
         idCount++;
@@ -49,6 +77,57 @@ function generateBoard(board) {
             tile.classList.add("rightBorder");
         }
         id("board").appendChild(tile);
+    }
+}
+
+function updateMove() {
+    if (selectedTile) {
+        var number;
+
+        // naprawić pobieranie cyfr z klawiatury !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        tile.addEventListener("keypress", function(ev) {
+            var keyCode = ev.keyCode;
+
+            if (keyCode) {
+                number = String.fromCharCode(keyCode);
+
+                // dodać walidację - tylko cyfry !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
+        });
+
+        selectedTile.textContent = number;
+
+        if (checkCorrect(selectedTile)) {
+            selectedTile.classList.remove("selected");
+            selectedTile = null;
+        } else {
+            disableSelect = true;
+            selectedTile.classList.add("incorrect");
+
+            setTimeout(function() {
+                selectedTile.classList.remove("incorrect");
+                selectedTile.classList.remove("selected");
+                selectedTile.textContent = "";
+                selectedTile = null;
+            }, 1000);
+        }
+    }
+}
+
+function checkCorrect(tile) {
+    let solution;
+    if (id("dif-easy").checked) solution = easy[1];
+    else if (id("dif-medium").checked) solution = medium[1];
+    else solution = hard[1];
+
+    if (solution.charAt(tile.id) === tile.textContent) return true;
+    else return false;
+}
+
+function clearPrevious() {
+    let tiles = document.querySelectorAll(".tile");
+    for (let i = 0; i < tiles.length; i++) {
+        tiles[i].remove();
     }
 }
 

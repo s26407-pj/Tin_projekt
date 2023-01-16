@@ -50,7 +50,7 @@ button {
 }
 
 .tile {
-    border: 1px solid black;
+    border: 1px solid #999;
     width: 60px;
     height: 60px;
     text-align: center;
@@ -59,8 +59,16 @@ button {
     font-size: 40pt;
 }
 
+.dark .tile {
+    border: 1px solid grey;
+}
+
 p.selected {
     background-color: lightblue;
+}
+
+.dark p.selected {
+    background-color: rgb(34, 46, 50);
 }
 
 p.incorrect {
@@ -68,9 +76,17 @@ p.incorrect {
 }
 
 .bottomBorder {
-    border-bottom: 4px solid black;
+    border-bottom: 4px solid #999;
 }
 
 .rightBorder {
-    border-right: 4px solid black;
+    border-right: 4px solid #999;
+}
+
+.dark .bottomBorder {
+    border-bottom: 4px solid grey;
+}
+
+.dark .rightBorder {
+    border-right: 4px solid grey;
 }
