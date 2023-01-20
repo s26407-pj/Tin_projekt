@@ -123,6 +123,7 @@ function updateMove() {
                 selectedTile.textContent = "";
                 selectedTile = null;
                 selectedNum = null;
+                disableSelect = false;
             }, 1000);
         }
     } else {
