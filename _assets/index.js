@@ -12,6 +12,7 @@ const hard = [
     "712583694639714258845269173521436987367928415498175326184697532253841769976352841"
 ];
 
+var selectedNum = null;
 var selectedTile;
 var disableSelect;
 
@@ -61,7 +62,8 @@ function generateBoard(board) {
                         }
                         tile.classList.add("selected");
                         selectedTile = tile;
-                        updateMove();
+                        getNumber();
+                        //updateMove();
                     }
                 }
             });
@@ -80,38 +82,60 @@ function generateBoard(board) {
     }
 }
 
+function getNumber() {
+    document.querySelector("body").addEventListener("keypress", (event) => {
+        selectedNum = event.key;
+
+        console.log("number: " + selectedNum);
+
+        updateMove();
+    });
+}
+
 function updateMove() {
-    if (selectedTile) {
-        var number;
+    if (selectedTile && selectedNum) {
 
-        // naprawić pobieranie cyfr z klawiatury !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        tile.addEventListener("keypress", function(ev) {
-            var keyCode = ev.keyCode;
+        console.log("weszlo number: " + selectedNum);
 
-            if (keyCode) {
-                number = String.fromCharCode(keyCode);
+        selectedTile.textContent = selectedNum;
 
-                // dodać walidację - tylko cyfry !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            }
-        });
-
-        selectedTile.textContent = number;
+        console.log("weszlo selectedtile: " + selectedTile.textContent);
 
         if (checkCorrect(selectedTile)) {
             selectedTile.classList.remove("selected");
             selectedTile = null;
+            selectedNum = null;
+
+            if (checkDone()) {
+                disableSelect = true;
+                id("won").textContent = "Wygrana!";
+                alert("Wygrana!");
+            }
         } else {
             disableSelect = true;
             selectedTile.classList.add("incorrect");
 
             setTimeout(function() {
-                selectedTile.classList.remove("incorrect");
+                console.log("weszlo timeout");
+
+                //selectedTile.classList.remove("incorrect");
                 selectedTile.classList.remove("selected");
                 selectedTile.textContent = "";
                 selectedTile = null;
+                selectedNum = null;
             }, 1000);
         }
+    } else {
+        console.log("nie weszlo, number: " + selectedNum);
     }
+}
+
+function checkDone() {
+    let tiles = document.querySelectorAll(".tile");
+    for (let i = 0; i < tiles.length; i++) {
+        if (tiles[i].textContent === "") return false;
+    } 
+    return true;
 }
 
 function checkCorrect(tile) {
