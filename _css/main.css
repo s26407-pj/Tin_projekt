@@ -8,6 +8,20 @@ header {
     padding-bottom: 20px;
 }
 
+#form {
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    width: 300px;
+    margin-bottom: 20px;;
+}
+
+form label {
+    padding-bottom: 10px;
+}
+
 #game-parameters {
     display: flex;
     justify-content: center;
@@ -45,18 +59,18 @@ button {
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-start;
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
 }
 
 .tile {
     border: 1px solid #999;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     text-align: center;
     margin: 0px;
     vertical-align: middle;
-    font-size: 40pt;
+    font-size: 30pt;
 }
 
 .dark .tile {
@@ -89,4 +103,17 @@ p.incorrect {
 
 .dark .rightBorder {
     border-right: 4px solid grey;
+}
+
+.hidden {
+    display: none;
+}
+
+.welcome {
+    font-size: 20pt;
+    margin-top: 0;
+}
+
+#solution:hover {
+    cursor: pointer;
 }

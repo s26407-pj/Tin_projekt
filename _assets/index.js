@@ -15,13 +15,22 @@ const hard = [
 var selectedNum = null;
 var selectedTile;
 var disableSelect;
+var player;
 
 window.onload = function() {
     id("create-game-btn").addEventListener("click", StartGame);
+    id("solution").addEventListener("click", showSolution);
 }
 
 function StartGame() {
 console.log("start!!!!!!!!!");
+
+    document.querySelector("form").classList.add("hidden");
+    document.querySelector(".welcome").classList.remove("hidden");
+
+    player = document.getElementById("name").value;  
+
+    id("welcome").textContent = "Witaj " + player;
 
     let board;
     if (id("dif-easy").checked) board = easy[0];
@@ -79,6 +88,8 @@ function generateBoard(board) {
             tile.classList.add("rightBorder");
         }
         id("board").appendChild(tile);
+
+        document.getElementById("solution").classList.remove("hidden");
     }
 }
 
@@ -108,8 +119,7 @@ function updateMove() {
 
             if (checkDone()) {
                 disableSelect = true;
-                id("won").textContent = "Wygrana!";
-                alert("Wygrana!");
+                id("welcome").textContent = "Wygrana!";
             }
         } else {
             disableSelect = true;
@@ -118,7 +128,7 @@ function updateMove() {
             setTimeout(function() {
                 console.log("weszlo timeout");
 
-                //selectedTile.classList.remove("incorrect");
+                selectedTile.classList.remove("incorrect");
                 selectedTile.classList.remove("selected");
                 selectedTile.textContent = "";
                 selectedTile = null;
@@ -147,6 +157,18 @@ function checkCorrect(tile) {
 
     if (solution.charAt(tile.id) === tile.textContent) return true;
     else return false;
+}
+
+function showSolution() {
+    console.log("weszlo showSolution");
+
+    // Pokarz rozwiązanie ////////////////
+    let solution;
+    if (id("dif-easy").checked) solution = easy[1];
+    else if (id("dif-medium").checked) solution = medium[1];
+    else solution = hard[1];
+
+    generateBoard(solution);
 }
 
 function clearPrevious() {
